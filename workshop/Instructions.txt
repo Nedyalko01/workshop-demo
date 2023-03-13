@@ -1,0 +1,46 @@
+Java 17 is mandatory.
+
+Start the PostgreSQL database container using Docker:
+docker-compose up -d
+
+Run the Flyway migrations to create the necessary database schema:
+mvn flyway:migrate
+
+Build and run your Spring Boot application using Maven:
+mvn clean install
+java -jar target/workshop-0.0.1-SNAPSHOT.jar
+
+Use a tool such as curl or Postman to interact with your API endpoints. Here are some examples:
+To create a new employee:
+curl -X POST -H "Content-Type: application/json" \
+-d '{"fullName": "John Doe", "email": "johndoe@example.com", "phoneNumber": "1234567890", "dateOfBirth": "1990-01-01", "monthlySalary": 1000.0}' \
+http://localhost:8080/api/employees
+
+To get a list of all employees:
+curl http://localhost:8080/api/employees
+
+To update an employee:
+curl -X PUT -H "Content-Type: application/json" \
+-d '{"fullName": "Jane Smith", "email": "janesmith@example.com", "phoneNumber": "0987654321", "dateOfBirth": "1995-01-01", "monthlySalary": 2000.0}' \
+http://localhost:8080/api/employees/1
+
+To delete an employee:
+curl -X DELETE http://localhost:8080/api/employees/1
+
+To create a new task:
+curl -X POST -H "Content-Type: application/json" \
+-d '{"title": "Task 1", "description": "Description 1", "assignee": {"id": 2}, "dueDate": "2023-04-01"}' \
+http://localhost:8080/api/tasks
+
+To get a list of all tasks:
+curl http://localhost:8080/api/tasks
+To update a task:
+curl -X PUT -H "Content-Type: application/json" \
+-d '{"title": "Task 2", "description": "Description 2", "assignee": {"id": 1}, "dueDate": "2023-05-01", "status": "COMPLETED"}' \
+http://localhost:8080/api/tasks/1
+
+To delete a task:
+curl -X DELETE http://localhost:8080/api/tasks/1
+
+To get the top 5 employees by task count for the previous month:
+curl http://localhost:8080/api/reports/top-employees
